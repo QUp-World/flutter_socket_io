@@ -221,7 +221,11 @@ public class SocketIO {
             try {
                 jb = new JSONObject(message);
             } catch (JSONException e) {
-                e.printStackTrace();
+                if (event.equals("ack")) {
+                    _socket.emit(event, message);
+                } else {
+                    e.printStackTrace();
+                }
             }
             if (jb != null) {
                 final SocketListener listener = new SocketListener(_methodChannel, getId(), event, callback);
